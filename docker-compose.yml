@@ -1,0 +1,30 @@
+version: '3'
+services:
+  web:
+    container_name: ani-testlab
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+    networks:
+      - default
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver
+    environment:
+      SA_PASSWORD: "KmWfQb4P985zSepj"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1434:1433"
+    volumes:
+      - dbdata:/var/opt/mssql
+    networks:
+      - default
+volumes:
+  dbdata:
+networks:
+  default:
+    driver: bridge
